@@ -9,6 +9,8 @@ public class Recursion{
     public double sqrt(double n){
 	if (n<0){
 	    throw new IllegalArgumentException();
+	}else if(n==0){
+	    return 0;
 	}else{
 	    return sqrtH(n,1); 
 	}
