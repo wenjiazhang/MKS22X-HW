@@ -1,9 +1,0 @@
-public class KightsTour{
-    public static boolean DEBUG=false;
-    public int[][] board;
-
-    public KnightsTour(int n){
-	board = new int[n][n];
-
-    }
-}
