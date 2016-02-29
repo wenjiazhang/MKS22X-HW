@@ -13,32 +13,21 @@ public class KnightBoard{
     public boolean solve(){
 	return solve(0,0,1);
     }
-    /*
-    private boolean solveH(int n,int row,int col,int o_row,int o_col){
-	if(n=size*size+1 && board[row+2][col+2]==1){
-	    return true;
-	}
-	if(board[row+2][col+2]!=0){
-	    return solveH(n-1,o_row,o_col,o_row,o_col);
-	}
-	return false;
-    }
-    */
+   
     private boolean solve(int x,int y,int currentMove){
 	if(DEBUG){
 	    //System.out.println(x+","+y);
 	}
 	//bad spot
-	if(board[x+2][y+2]!=0 && !(currentMove == row*col+1 && board[x+2][y+2] == 1)){
+	if(board[x+2][y+2]!=0){
 	    return false;
-	}
-	//solved?
-	if(currentMove == row*col+1 &&  board[x+2][y+2] == 1){
-	    board[x+2][y+2] = 1;
-	    return true;
 	}
 	//put down
 	board[x+2][y+2] = currentMove;
+	//solved?
+	if(currentMove == row*col){
+	    return true;
+	}
 
 	if(solve(x+2,y+1,currentMove+1) ||
 	   solve(x+2,y-1,currentMove+1) ||
