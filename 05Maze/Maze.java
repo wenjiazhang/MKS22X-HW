@@ -4,7 +4,7 @@ import java.io.*;
 public class Maze{
 
     private char[][]maze;
-    private int startx,starty;
+    private int startx = -1,starty = -1;
     private boolean animate;
 
     /*Constructor loads a maze text file.
@@ -19,9 +19,10 @@ public class Maze{
       3. When the file is not found, print an error and exit the program.
     */
     public Maze(String filename, boolean ani){
+	animate = ani;
 	String lines = "";
 	try{
-	    Scanner in = new Scanner(filename);
+	    Scanner in = new Scanner(new File(filename));
 	    while(in.hasNextLine()){
 		lines += in.nextLine()+"\n";
 	    }
@@ -34,6 +35,10 @@ public class Maze{
 	for(int row=0;row<maze1.length;row++){
 	    for(int col=0;col<maze[row].length;col++){
 		maze[row][col] = maze1[row].charAt(col);
+		if(maze[row][col] == 'S'){
+		    startx = row;
+		    starty = col;
+		}
 	    }
 	}
     }
@@ -74,7 +79,40 @@ public class Maze{
             wait(20);
         }
 
-        //COMPLETE SOLVE
+	//bad landing
+	if(maze[x][y]!=' ' && maze[x][y]!='@'){
+	    return false;
+	}
+	//land
+	maze[x][y] = '@';
+	//reach exit
+	if(maze[x+1][y] == 'E' ||
+	   maze[x-1][y] == 'E' ||
+	   maze[x][y+1] == 'E' ||
+	   maze[x][y-1] == 'E'){
+	    return true;
+	}
+	//moving forward
+	if(maze[x+1][y] == ' '){
+	    return solve(x+1,y);
+	}else if(maze[x-1][y] == ' '){
+	    return solve(x-1,y);
+	}else if(maze[x][y+1] == ' '){
+	    return solve(x,y+1);
+	}else if(maze[x][y-1] == ' '){
+	    return solve(x,y-1);
+	}
+	//backtracking
+	maze[x][y] = '.';
+	if(maze[x+1][y] == '@'){
+	    return solve(x+1,y);
+	}else if(maze[x-1][y] == '@'){
+	    return solve(x-1,y);
+	}else if(maze[x][y+1] == '@'){
+	    return solve(x,y+1);
+	}else if(maze[x][y-1] == '@'){
+	    return solve(x,y-1);
+	}
         return false; //so it compiles
     }
 
@@ -86,8 +124,8 @@ public class Maze{
     }
 
     public String toString(){
-        int maxx = maze.length;
-        int maxy = maze[0].length;
+        int maxy = maze.length;
+        int maxx = maze[0].length;
         String ans = "";
         if(animate){
             ans = "Solving a maze that is " + maxx + " by " + maxy + "\n";
@@ -96,7 +134,7 @@ public class Maze{
             if(i % maxx == 0 && i != 0){
                 ans += "\n";
             }
-            char c =  maze[i % maxx][i / maxx];
+            char c =  maze[i / maxx][i % maxx];
             if(c == '#'){
                 ans += color(38,47)+c;
             }else{
