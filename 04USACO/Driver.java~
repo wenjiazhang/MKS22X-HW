@@ -1,0 +1,6 @@
+public class Driver{
+    public static void main(String[]args){
+	makelake test = new makelake("data1.dat");
+	System.out.println(test);
+    }
+}
