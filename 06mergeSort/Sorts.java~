@@ -1,0 +1,43 @@
+public class Sorts{
+    public static void  mergesort(int[]data){
+	return mergesort(data,0,data.length-1);
+    }
+
+    public static void mergesort(int[]data,int start,int end){
+	if(end-start==1 && data[start]>data[end]){
+	    int i = data[start];
+	    data[start] = data[end];
+	    data[end] = i;
+	}else if(end-start>1){
+	    mergesort(data,start,(int)((end+start)/2));
+	    mergesort(data,(int)((end+start)/2)+1,end);
+	    merge(data,start,(int)((end+start)/2),);
+	}
+	
+    }
+
+    public static void merge(int[]data,int start1,int end1,int start2,int end2){
+	//int now = start1;
+	while(end1-start1>=0 && end2-start2>=0){
+	    if(data[start1]>data[start2]){
+		shuffle(data,start1,start2);
+		start1++;
+		start2++;
+	    }else{
+		start1++;
+	    }
+	}
+    }
+
+    public static void shuffle(int[]data,int start,int index){
+	int target = data[index];
+	for(int i=index;i>start;i--){
+	    data[i] = data[i-1];
+	}
+	data[start] = target;
+    }
+    
+    public static String name(){
+	return "7,Zhang,Wenjia";
+    }
+}

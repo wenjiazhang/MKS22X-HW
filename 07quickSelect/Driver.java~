@@ -1,0 +1,7 @@
+public class Driver{
+    public static void main(String[]args){
+	int[] test = {3,0,4,7,1,2};
+	Quick.partition(test,0,5);
+	Quick.printlist(test);
+    }
+}

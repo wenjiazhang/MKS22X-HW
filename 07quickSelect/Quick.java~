@@ -1,0 +1,31 @@
+public class Quick{
+    public static int partition(int[] data,int left,int right){
+	int index = (int)(left + Math.random()*(right-left+1));
+	swap(data,index,left);
+
+	int start = left+1;
+	end = right;
+	while(start < end){
+	    if(data[start] > data[left]){
+		swap(data,start,end);
+	    }else{
+		start++;
+	    }
+	}
+	return index;
+    }
+
+    public static int quickselect(int[]data,int k,int left,int right){
+	if(left==right){
+	    return data[left];
+	}
+	int index = partition(data,left,right);
+	if(index == k){
+	    return data[k];
+	}else if(index < k){
+	    return quickselect(data,k,left,index-1);
+	}else{
+	    return quickselect(data,index+1,right);
+	}
+    }
+}
